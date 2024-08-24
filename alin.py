@@ -68,7 +68,7 @@ def fetch_housing_offers(postal_codes):
                 rent = housing_info["rent_with_charges"]
                 availability_date = housing_info["availability_date"]
                 logging.info(f"New offer found: Address: {address}, Rent: {rent} EUR, Available from: {availability_date}")
-                send_telegram_message(f"New offer push: Address: {address}, Rent: {rent} EUR, Available from: {availability_date}")
+                send_telegram_message(f"New offer : Address: {address}, Rent: {rent} EUR, Available from: {availability_date}")
             else:
                 logging.info(f"Offer {offer_id} has already been processed.")
     else:
