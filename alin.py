@@ -92,7 +92,7 @@ def start(message):
                 # Trigger the /postal command with saved postal codes
                 handle_postal_codes(saved_postal_codes)
     except FileNotFoundError:
-        pass
+        print("ERROR: file not found")
 
 @bot.message_handler(commands=['postal'])
 def postal(message):
@@ -143,7 +143,7 @@ def main():
                 # Trigger the /postal command with saved postal codes
                 handle_postal_codes(saved_postal_codes)
     except FileNotFoundError:
-        pass
+        print("ERROR: file not found")
     bot.polling(none_stop=True)
 
 if __name__ == "__main__":
