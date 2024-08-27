@@ -40,6 +40,36 @@ def logAndSend(text):
     print(text)
     send_telegram_message(text)
 
+@bot.message_handler(commands=['start'])
+def start(message):
+    bot.reply_to(message, "Welcome! Use /postal [postal code1] [postal code2] ... to search for housing offers.")
+    # Check if there's a postal code saved in the file
+    try:
+        with open(POSTAL_CODE_FILE, 'r') as file:
+            saved_postal_codes = file.read().strip().split(',')
+            if saved_postal_codes:
+                # Trigger the /postal command with saved postal codes
+                handle_postal_codes(saved_postal_codes)
+    except FileNotFoundError:
+        print("ERROR: file not found")
+
+@bot.message_handler(commands=['postal'])
+def postal(message):
+    
+    try:
+        # Extract postal codes from message text
+        postal_codes = message.text.split()[1:]
+
+        # Check if postal codes are provided and valid
+        if not postal_codes:
+            bot.reply_to(message, "Please provide at least one postal code. Usage: /postal [postal code1] [postal code2] ...")
+            return
+
+        handle_postal_codes(postal_codes)
+        
+    except Exception as e:
+        bot.reply_to(message, f"An error occurred: {str(e)}")
+
 def fetch_housing_offers(postal_codes):
     global processed_offers
 
@@ -122,18 +152,7 @@ def main():
                 handle_postal_codes(saved_postal_codes)
     except FileNotFoundError:
         logAndSend("ERROR: file not found")
-
-    # Get postal codes from user input
-    while True:
-        user_input = input("Enter postal codes separated by spaces (or 'exit' to quit): ")
-        if user_input.lower() == 'exit':
-            should_fetch = False
-            if fetch_thread and fetch_thread.is_alive():
-                fetch_thread.join()  # Wait for the thread to stop
-            break
-
-        postal_codes = user_input.split()
-        handle_postal_codes(postal_codes)
+    bot.polling(none_stop=True)
 
 if __name__ == "__main__":
     main()
