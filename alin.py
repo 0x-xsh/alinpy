@@ -7,7 +7,7 @@ import time
 import threading
 
 # Set your Telegram bot token here
-TELEGRAM_BOT_TOKEN = "7530363571:AAH9_aN2VeCnQuZR8oH5vjN92i7A72NAuJo"
+TELEGRAM_BOT_TOKEN = "7540457118:AAEsbNbi7aM23Xx-Sr7pQhgFaRUgVmobTJQ"
 
 # Define the chat ID or user ID to receive the startup message
 STARTUP_CHAT_ID = "818102635"
