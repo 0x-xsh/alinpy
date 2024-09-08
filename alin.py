@@ -1,16 +1,18 @@
-# import logging
-# import telebot
-# import requests
-# import json
-# from datetime import datetime, timedelta
-# import time
-# import threading
+import logging
+import telebot
+import requests
+import json
+from datetime import datetime, timedelta
+import time
+import threading
 
-# # Set your Telegram bot token here
-# TELEGRAM_BOT_TOKEN = "7540457118:AAEsbNbi7aM23Xx-Sr7pQhgFaRUgVmobTJQ"
+# Set your Telegram bot token here
+TELEGRAM_BOT_TOKEN = "7540457118:AAEsbNbi7aM23Xx-Sr7pQhgFaRUgVmobTJQ"
 
-# # Define the chat ID or user ID to receive the startup message
-# STARTUP_CHAT_ID = "818102635"
+# Define the chat ID or user ID to receive the startup message
+STARTUP_CHAT_ID = "818102635"
+
+bot = telebot.TeleBot(TELEGRAM_BOT_TOKEN)
 
 # # API endpoint URL
 # API_URL = "https://api.al-in.fr/api/dmo/public_housing_offers"
@@ -23,22 +25,22 @@
 # no_offers_reported = False
 
 # # Initialize Telebot for sending messages
-# bot = telebot.TeleBot(TELEGRAM_BOT_TOKEN)
+
 
 # # File to store the latest postal codes
 # POSTAL_CODE_FILE = 'latest_postal_code.txt'
 
-# def send_telegram_message(text):
-#     try:
-#         bot.send_message(chat_id=STARTUP_CHAT_ID, text=text)
-#     except telebot.apihelper.ApiException as e:
-#         logging.error(f"Error sending message: {e}")
-#         time.sleep(5)
-#         send_telegram_message(text)
+def send_telegram_message(text):
+    try:
+        bot.send_message(chat_id=STARTUP_CHAT_ID, text=text)
+    except telebot.apihelper.ApiException as e:
+        logging.error(f"Error sending message: {e}")
+        time.sleep(5)
+        send_telegram_message(text)
 
-# def logAndSend(text):
-#     print(text)
-#     send_telegram_message(text)
+def logAndSend(text):
+    print(text)
+    send_telegram_message(text)
 
 # @bot.message_handler(commands=['start'])
 # def start(message):
@@ -145,18 +147,18 @@
 #     fetch_thread = threading.Thread(target=fetch_and_loop)
 #     fetch_thread.start()
 
-# def main():
-#     logAndSend("Bot has started successfully!")
+def main():
+    logAndSend("Bot has started successfully!")
 
-#     try:
-#         with open(POSTAL_CODE_FILE, 'r') as file:
-#             saved_postal_codes = file.read().strip().split(',')
-#             if saved_postal_codes[0] != '':
-#                 # Trigger the handling of saved postal codes
-#                 handle_postal_codes(saved_postal_codes)
-#     except FileNotFoundError:
-#         logAndSend("ERROR: file not found")
-#     bot.polling(none_stop=True)
+    # try:
+    #     with open(POSTAL_CODE_FILE, 'r') as file:
+    #         saved_postal_codes = file.read().strip().split(',')
+    #         if saved_postal_codes[0] != '':
+    #             # Trigger the handling of saved postal codes
+    #             handle_postal_codes(saved_postal_codes)
+    # except FileNotFoundError:
+    #     logAndSend("ERROR: file not found")
+    # bot.polling(none_stop=True)
 
-# if __name__ == "__main__":
-#     main()
+if __name__ == "__main__":
+    main()
