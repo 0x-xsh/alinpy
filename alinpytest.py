@@ -1,3 +1,4 @@
+import os
 import logging
 import telebot
 import requests
@@ -5,15 +6,15 @@ import json
 from datetime import datetime, timedelta
 import time
 import threading
+from dotenv import load_dotenv
 
-# Set your Telegram bot token here
-TELEGRAM_BOT_TOKEN = "7530363571:AAH9_aN2VeCnQuZR8oH5vjN92i7A72NAuJo"
+# Load environment variables from a .env file (optional, if using python-dotenv)
+load_dotenv()
 
-# Define the chat ID or user ID to receive the startup message
-STARTUP_CHAT_ID = "818102635"
-
-# API endpoint URL
-API_URL = "https://api.al-in.fr/api/dmo/public_housing_offers"
+# Set your configurations using environment variables
+TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
+STARTUP_CHAT_ID = os.getenv("STARTUP_CHAT_ID")
+API_URL = os.getenv("API_URL")
 
 # Store the processed house IDs with their last "offer_status_updated_at"
 processed_offers = {}
